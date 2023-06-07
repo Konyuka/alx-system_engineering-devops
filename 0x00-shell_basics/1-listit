@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $(ls -1)
+for $i in $(ls -1) echo $i; done
