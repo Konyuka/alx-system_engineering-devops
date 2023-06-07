@@ -1,2 +1,5 @@
 #!/bin/bash
-(cd .. find ./ -maxdepth 1 -type f -name "*.html" -newer "../$(basename "$PWD")/" -exec cp -n {} ../ \)
+(
+  cd ..
+  find ./ -maxdepth 1 -type f -name "*.html" -newer "../$(basename "$PWD")/" -exec cp -n {} ../ \;
+)
