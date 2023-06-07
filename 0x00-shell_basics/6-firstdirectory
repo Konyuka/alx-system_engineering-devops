@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "mkdri /temp/my_first_directory"
