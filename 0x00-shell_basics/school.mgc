@@ -1,2 +1,2 @@
 0 string SCHOOL School data
-!:mime School
+>0b regex \x53\x43\x48\x4f\x4f\x4c.* School data
