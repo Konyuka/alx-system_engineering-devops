@@ -16,9 +16,9 @@ def number_of_subscribers(subreddit):
     if subreddit is None or not isinstance(subreddit, str):
         return 0
 
-    user_agent = {'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+    user_agent = 'ALX-System_Engineering-Devops/0.1 (https://github.com/alx-system_engineering-devops)'
     url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    response = get(url, headers=user_agent)
+    response = get(url, headers={'User-Agent': user_agent})
 
     # Check the HTTP status code
     if response.status_code == 403:
