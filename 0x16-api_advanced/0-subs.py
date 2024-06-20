@@ -1,53 +1,47 @@
 #!/usr/bin/python3
 """
-Script to query the Reddit API and return the number of subscribers for a given subreddit.
+Function that queries the Reddit API and returns the number of subscribers
+(not active users, total subscribers) for a given subreddit.
 """
-
 import requests
 
 
 def number_of_subscribers(subreddit):
     """
-    Function that queries the Reddit API and returns the number of subscribers
-    (not active users, total subscribers) for a given subreddit.
+    Returns the number of subscribers for a given subreddit.
 
     Args:
-    - subreddit (str): The subreddit name to query.
+        subreddit (str): The name of the subreddit.
 
     Returns:
-    - int: Number of subscribers of the subreddit. Returns 0 if the subreddit is invalid or
-           if there's any issue with the API request.
+        int: The number of subscribers for the given subreddit.
+            If the subreddit is invalid, returns 0.
     """
-    if not isinstance(subreddit, str):
+    if subreddit is None or not isinstance(subreddit, str):
         return 0
-
-    user_agent = {'User-agent': 'Mozilla/5.0'}
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
 
     try:
-        response = requests.get(url, headers=user_agent)
-        if response.status_code == 200:
-            data = response.json()
-            return data['data']['subscribers']
-        else:
-            return 0
-    except requests.RequestException as e:
-        print(f"Request Error: {e}")
+        url = f"https://www.reddit.com/r/{subreddit}/about.json"
+        headers = {"User-Agent": "ALX-System_Engineering-Devops/0.1 (https://github.com/alx-system_engineering-devops)"}
+        response = requests.get(url, headers=headers)
+
+        # Check if the request was successful
+        response.raise_for_status()
+
+        # Extract the number of subscribers from the JSON response
+        data = response.json()
+        return data["data"]["subscribers"]
+    except requests.exceptions.RequestException:
+        # Handle exceptions related to the HTTP request
         return 0
-    except KeyError as e:
-        print(f"KeyError: {e}")
-        return 0
-    except Exception as e:
-        print(f"Error: {e}")
+    except (KeyError, ValueError):
+        # Handle exceptions related to parsing the JSON response
         return 0
 
 
 if __name__ == "__main__":
     import sys
     if len(sys.argv) < 2:
-        print("Usage: python3 number_of_subscribers.py <subreddit>")
+        print("Usage: python3 0-main.py <subreddit>")
         sys.exit(1)
-    
-    subreddit = sys.argv[1]
-    num_subscribers = number_of_subscribers(subreddit)
-    print(f"{num_subscribers}")
+    print("{:d}".format(number_of_subscribers(sys.argv[1])))
