@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script to query the Reddit API and return the number of subscribers for a given subreddit.
+Sript to query the Reddit API and return the number of subscribers for a given subreddit.
 """
 
 import requests
