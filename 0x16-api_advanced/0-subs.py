@@ -1,5 +1,3 @@
-python
-Copy code
 #!/usr/bin/python3
 """
 Importing requests module
