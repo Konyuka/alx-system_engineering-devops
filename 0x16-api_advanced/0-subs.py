@@ -1,3 +1,5 @@
+python
+Copy code
 #!/usr/bin/python3
 """
 Importing requests module
@@ -18,10 +20,31 @@ def number_of_subscribers(subreddit):
     user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
     url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     response = get(url, headers=user_agent)
-    all_data = response.json()
 
-    try:
-        return all_data.get('data').get('subscribers')
-
-    except:
+    # Check the HTTP status code
+    if response.status_code != 200:
+        print(f"Error: Received status code {response.status_code}")
         return 0
+
+    # Attempt to parse the JSON response
+    try:
+        all_data = response.json()
+    except ValueError as e:
+        print(f"Error: Failed to parse JSON response - {e}")
+        print(f"Response content: {response.text}")
+        return 0
+
+    # Safely extract the number of subscribers
+    try:
+        return all_data.get('data', {}).get('subscribers', 0)
+    except Exception as e:
+        print(f"Error: {e}")
+        return 0
+
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: python3 0-main.py <subreddit>")
+    else:
+        print("{:d}".format(number_of_subscribers(sys.argv[1])))
