@@ -1,5 +1,3 @@
-python
-Copy code
 #!/usr/bin/python3
 """
 Function to query the Reddit API and return the number of subscribers for a given subreddit.
