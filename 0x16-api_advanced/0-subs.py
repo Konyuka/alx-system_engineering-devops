@@ -22,7 +22,7 @@ def number_of_subscribers(subreddit):
 
     try:
         url = f"https://www.reddit.com/r/{subreddit}/about.json"
-        headers = {"User-Agent": "ALX-System_Engineering-Devops/0.1 (https://github.com/alx-system_engineering-devops)"}
+        headers = {"User-Agent": "ALX-System_Engineering-Devops/0.1 (https://github.com/Konyuka/alx-system_engineering-devops)"}
         response = requests.get(url, headers=headers)
 
         # Check if the request was successful
