@@ -37,11 +37,3 @@ def number_of_subscribers(subreddit):
     except (KeyError, ValueError):
         # Handle exceptions related to parsing the JSON response
         return 0
-
-
-if __name__ == "__main__":
-    import sys
-    if len(sys.argv) < 2:
-        print("Usage: python3 0-main.py <subreddit>")
-        sys.exit(1)
-    print("{:d}".format(number_of_subscribers(sys.argv[1])))
