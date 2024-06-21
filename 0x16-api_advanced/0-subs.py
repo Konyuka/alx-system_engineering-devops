@@ -5,7 +5,6 @@ Importing requests module
 
 from requests import get
 
-
 def number_of_subscribers(subreddit):
     """
     function that queries the Reddit API and returns the number of subscribers
