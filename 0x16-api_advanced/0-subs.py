@@ -1,39 +1,26 @@
 #!/usr/bin/python3
-"""
-Function that queries the Reddit API and returns the number of subscribers
-(not active users, total subscribers) for a given subreddit.
-"""
+"""Function that queries the Reddit API and returns the number of subscribers"""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """
-    Returns the number of subscribers for a given subreddit.
+  """Function that queries the Reddit API and returns the number of subscribers"""
 
-    Args:
-        subreddit (str): The name of the subreddit.
+  if subreddit is None or not isinstance(subreddit, str):
+    return 0
 
-    Returns:
-        int: The number of subscribers for the given subreddit.
-            If the subreddit is invalid, returns 0.
-    """
-    if subreddit is None or not isinstance(subreddit, str):
-        return 0
+  user_agent = {'User-agent': 'My Reddit Subscriber Scraper v1.0 (by your_username@example.com)'}
+  url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
 
+  response = requests.get(url, allow_redirects=False, headers=user_agent)
+
+  if response.status_code == 200:
     try:
-        url = f"https://www.reddit.com/r/{subreddit}/about.json"
-        headers = {"User-Agent": "ALX-System_Engineering-Devops/0.1 (https://github.com/Konyuka/alx-system_engineering-devops)"}
-        response = requests.get(url, headers=headers)
-
-        # Check if the request was successful
-        response.raise_for_status()
-
-        # Extract the number of subscribers from the JSON response
-        data = response.json()
-        return data["data"]["subscribers"]
-    except requests.exceptions.RequestException:
-        # Handle exceptions related to the HTTP request
-        return 0
-    except (KeyError, ValueError):
-        # Handle exceptions related to parsing the JSON response
-        return 0
+      all_data = response.json()
+      return all_data.get('data', {}).get('subscribers', 0)
+    except (ValueError, KeyError):
+      print(f"Error: Failed to parse JSON response or missing key for '{subreddit}'.")
+      return 0
+  else:
+    print(f"Error: Received status code {response.status_code} for '{subreddit}'.")
+    return 0
