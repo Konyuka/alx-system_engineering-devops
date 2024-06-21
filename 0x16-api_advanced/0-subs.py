@@ -1,25 +1,27 @@
 #!/usr/bin/python3
-"""Query the Reddit and return the number of subscribers"""
+"""
+Importing requests module
+"""
 
-import requests
+from requests import get
+
 
 def number_of_subscribers(subreddit):
-  """Function that queries the Reddit API and returns the number of subscribers"""
+    """
+    function that queries the Reddit API and returns the number of subscribers
+    (not active users, total subscribers) for a given subreddit.
+    """
 
-  if subreddit is None or not isinstance(subreddit, str):
-    return 0
+    if subreddit is None or not isinstance(subreddit, str):
+        return 0
 
-  user_agent = {'User-agent': 'My Reddit Subscriber Scraper v1.0 (by your_username@example.com)'}
-  url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-  response = requests.get(url, allow_redirects=False, headers=user_agent)
+    user_agent = {'User-agent': 'Google Chrome Version 81.0.4044.129'}
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
+    response = get(url, headers=user_agent)
+    all_data = response.json()
 
-  if response.status_code == 200:
     try:
-      all_data = response.json()
-      return all_data.get('data', {}).get('subscribers', 0)
-    except (ValueError, KeyError):
-      print(f"Error: Failed to parse JSON response or missing key for '{subreddit}'.")
-      return 0
-  else:
-    print(f"Error: Received status code {response.status_code} for '{subreddit}'.")
-    return 0
+        return all_data.get('data').get('subscribers')
+
+    except:
+        return 0
