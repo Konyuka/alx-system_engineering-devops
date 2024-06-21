@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""A Function that queries the Reddit API and returns the number of subscribers"""
-import requests
+"""Query the Reddit and return the number of subscribers"""
 
+import requests
 
 def number_of_subscribers(subreddit):
   """Function that queries the Reddit API and returns the number of subscribers"""
@@ -11,7 +11,6 @@ def number_of_subscribers(subreddit):
 
   user_agent = {'User-agent': 'My Reddit Subscriber Scraper v1.0 (by your_username@example.com)'}
   url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-
   response = requests.get(url, allow_redirects=False, headers=user_agent)
 
   if response.status_code == 200:
